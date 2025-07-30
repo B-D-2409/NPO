@@ -188,7 +188,6 @@ function NavigationBar() {
                 </div>
             </div>
 
-            {/* Mobile меню при отворено състояние */}
             {isMenuOpen && (
                 <div className="md:hidden flex flex-col px-4 pb-4 space-y-2 bg-white shadow-sm">
                     {moreLinks.map(({ to, label }) => (
