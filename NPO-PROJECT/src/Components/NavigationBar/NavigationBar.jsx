@@ -7,9 +7,9 @@ function NavigationBar() {
     const [isLoginOpen, setIsLoginOpen] = useState(false);
 
     const mainLinks = [
-        { to: "/donationform", label: "Дарения" },
-        { to: "/mission", label: "Мисия" },
-        { to: "/activityhistory", label: "Дейности" },
+        { to: "/donationform", label: "ДАРЕТЕ", color: "bg-white text-black" },
+        { to: "/mission", label: "МИСИЯ", color: "bg-green-500 text-white" },
+        { to: "/activityhistory", label: "ДЕЙНОСТИ", color: "bg-red-500 text-white" },
     ];
 
     const moreLinks = [
@@ -22,24 +22,32 @@ function NavigationBar() {
     ];
 
     return (
-        <nav className="bg-white shadow-md fixed w-full top-0 z-50">
+        <nav className="bg-gray-400 shadow-md fixed w-full top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
                     <div className="mr-auto">
-                        <Link to="/" className="text-xl font-bold text-blue-600">
+                        <Link
+                            to="/"
+                            className="text-xl font-bold bg-clip-text text-transparent"
+                            style={{
+                                backgroundImage: "linear-gradient(to right, white 10%, lightgreen 30%, green 72%, darkred 70%, red 100%)"
+
+                            }}
+                        >
                             Родолюбци за България
                         </Link>
+
                     </div>
 
                     {/* Desktop menu */}
                     <div className="hidden md:flex items-center space-x-6 relative">
 
-                        {mainLinks.map(({ to, label }) => (
+                        {mainLinks.map(({ to, label, color }) => (
                             <Link
                                 key={label}
                                 to={to}
-                                className="text-blue-700 font-semibold text-lg hover:text-blue-900"
+                                className={`px-4 py-2 rounded font-semibold hover:opacity-80 transition ${color}`}
                             >
                                 {label}
                             </Link>
@@ -48,49 +56,37 @@ function NavigationBar() {
                         <div className="relative">
                             <button
                                 onClick={() => setIsMoreOpen(!isMoreOpen)}
-                                className="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center"
+                                className="text-gray-900 hover:text-green-600 focus:outline-none flex items-center"
                                 aria-label="Toggle more menu"
                             >
-                            
                                 <svg
-                                    className="w-6 h-8"  
+                                    className="w-6 h-6"
                                     fill="none"
                                     stroke="currentColor"
-                                    strokeWidth={3}       
+                                    strokeWidth={4}
                                     viewBox="0 0 24 24"
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h18" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 17h18" />
+                                    {isMoreOpen ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    ) : (
+                                        <>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h18" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 17h18" />
+                                        </>
+                                    )}
                                 </svg>
                             </button>
 
                             {isMoreOpen && (
                                 <div
-                                    className="fixed inset-0 flex justify-center items-start pt-24 bg-black bg-opacity-30 z-50"
+                                    className="fixed inset-0 flex justify-center items-start pt-16 bg-black bg-opacity-0 z-50"
                                     onClick={() => setIsMoreOpen(false)}
                                 >
                                     <div
-                                        className="bg-white rounded-lg shadow-xl w-[28rem] p-8 space-y-6 relative"
+                                        className="bg-white rounded-lg shadow-xl w-[95%] max-w-[1100px] p-8 space-y-6"
                                         onClick={(e) => e.stopPropagation()}
                                     >
-
-                                        <button
-                                            onClick={() => setIsMoreOpen(false)}
-                                            className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none"
-                                            aria-label="Close menu"
-                                        >
-                                            <svg
-                                                className="w-6 h-6"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </button>
-
                                         {moreLinks.map(({ to, label }) => (
                                             <Link
                                                 key={label}
@@ -109,7 +105,7 @@ function NavigationBar() {
                         <div className="ml-6 relative">
                             <button
                                 onClick={() => setIsLoginOpen(!isLoginOpen)}
-                                className="text-gray-700 hover:text-blue-600 focus:outline-none font-semibold"
+                                className="text-gray-700 hover:text-green-700 focus:outline-none font-semibold"
                             >
                                 Вход
                             </button>
@@ -117,7 +113,7 @@ function NavigationBar() {
                                 <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
                                     <Link
                                         to="/authentication"
-                                        className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
+                                        className="block px-4 py-2 text-gray-700 hover:bg-green-600"
                                         onClick={() => setIsLoginOpen(false)}
                                     >
                                         Вход в системата

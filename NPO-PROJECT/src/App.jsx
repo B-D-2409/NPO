@@ -16,10 +16,10 @@ import Auth from './Components/Authentication/Auth';
 
 function App() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <NavigationBar />
 
-      <main className="pt-20 px-4">
+      <main className="flex-grow pt-20 px-4">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/mission" element={<Mission />} />
@@ -36,7 +36,7 @@ function App() {
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }
 
