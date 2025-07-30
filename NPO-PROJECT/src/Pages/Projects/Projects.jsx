@@ -1,4 +1,4 @@
-function CurrentProjects() {
+function Projects() {
     return (
         <div>
         <h1>Current Projects</h1>
@@ -6,4 +6,4 @@ function CurrentProjects() {
         </div>
     );
 }
-export default CurrentProjects;
+export default Projects;
