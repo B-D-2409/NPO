@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
     return (
-        <div className="max-w-4xl mx-auto p-6 space-y-12">
+        <div className="pt-36 max-w-4xl mx-auto p-6 space-y-1">
             <h1 className="text-5xl font-extrabold text-center mb-8">
                 <span className="text-white">НПО </span>
                 <span className="text-green-600">„Родолюбци“</span>
@@ -34,7 +34,6 @@ function Home() {
                     Вижте проектите
                 </Link>
             </section>
-
         </div>
     );
 }
