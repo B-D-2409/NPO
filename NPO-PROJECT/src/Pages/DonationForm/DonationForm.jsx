@@ -8,7 +8,7 @@ function DonationForm() {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [comment, setComment] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("bank");
+    const [paymentMethod, setPaymentMethod] = useState("Method");
 
     const stripeLinksSmall = {
         20: "https://buy.stripe.com/7sIeV5buv6mV0BG4gi",
@@ -39,6 +39,18 @@ function DonationForm() {
                 ? stripeLinksSmall[donationAmount]
                 : stripeLinksLarge[donationAmount];
 
+                if (!name.trim()) {
+                    toast.error("Моля, въведете име.");
+                    return;
+                }
+                if (!email.trim()) {
+                    toast.error("Моля, въведете имейл.");
+                    return;
+                }
+                if (!amount || isNaN(amount) || Number(amount) <= 0) {
+                    toast.error("Моля, въведете валидна сума за дарение.");
+                    return;
+                }
         if (paymentMethod === "bank") {
             toast.info("Моля направете банков превод по посочените данни.");
             return;
@@ -252,7 +264,7 @@ function DonationForm() {
                         За големи дарения използвайте предоставените линкове или данни за банков превод.
                     </p>
 
-                    {/* Избор на метод за превод */}
+                
                     <div className="mb-6">
                         <label htmlFor="payment-method-large" className="block text-sm font-medium text-gray-700 mb-1">
                             Изберете метод на превод
