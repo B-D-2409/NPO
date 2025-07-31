@@ -13,7 +13,8 @@ import ActivityHistory from './Pages/ActivityHistory/ActivityHistory';
 import PodCast from './Pages/PodCast/PodCast';
 import Footer from './Components/Footer/Footer';
 import Auth from './Components/Authentication/Auth';
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -34,7 +35,7 @@ function App() {
           <Route path="/authentication" element={<Auth />} />
         </Routes>
       </main>
-
+      <ToastContainer position="top-right" autoClose={3000} />
       <Footer />
     </div>
   );
