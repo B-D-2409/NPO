@@ -21,7 +21,7 @@ function NavigationBar() {
         { to: "/eventsregistration", label: "Семинари" },
     ];
     return (
-        <nav className="bg-gray-400 shadow-md fixed w-full top-0 z-50 h-32">
+        <nav className="bg-blue-200 shadow-md fixed w-full top-0 z-50 h-32">
             <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 h-full flex items-center justify-between">
                 <div className="flex-shrink-0 h-full flex items-center">
                     <Link to="/" className="h-full flex items-center">

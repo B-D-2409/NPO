@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
     return (
-        <footer className="bg-gray-800 text-white py-6 text-center">
+        <footer className="bg-blue-500  text-white py-6 text-center">
             <p className="text-sm mb-3">
                 &copy; {new Date().getFullYear()} NPO Project. All rights reserved.
             </p>
