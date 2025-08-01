@@ -1,404 +1,127 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import PayPalButton from "../../Components/PaymentMethods/PayPal";
 
 function DonationForm() {
-    const [activeTab, setActiveTab] = useState("small");
-    const [amount, setAmount] = useState("");
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [comment, setComment] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("Method");
+    const [showStripe, setShowStripe] = useState(false);
+    const [showPaypal, setShowPaypal] = useState(false);
 
-    const stripeLinksSmall = {
+    const stripeLinks = {
         20: "https://buy.stripe.com/7sIeV5buv6mV0BG4gi",
         30: "https://buy.stripe.com/30BGN-EXAMPLE",
         50: "https://buy.stripe.com/6oEdR1gOP4eN1FK4gj",
         70: "https://buy.stripe.com/70BGN-EXAMPLE",
         100: "https://buy.stripe.com/14kdR19mnaDbbgk6os",
-    };
-
-
-    const stripeLinksLarge = {
         1000: "https://buy.stripe.com/28odR1aqr5iR3NS5kr",
         2000: "https://buy.stripe.com/eVacMXfKL4eNesw9AI",
         5000: "https://buy.stripe.com/4gw00b1TV3aJ98c7sB",
         10000: "https://buy.stripe.com/00gfZ90PRh1zdos8wG",
     };
 
-    const handleDefaultAmountClick = (val) => {
-        setAmount(val.toString());
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const donationAmount = parseFloat(amount);
-        const stripeUrl =
-            activeTab === "small"
-                ? stripeLinksSmall[donationAmount]
-                : stripeLinksLarge[donationAmount];
-
-                if (!name.trim()) {
-                    toast.error("Моля, въведете име.");
-                    return;
-                }
-                if (!email.trim()) {
-                    toast.error("Моля, въведете имейл.");
-                    return;
-                }
-                if (!amount || isNaN(amount) || Number(amount) <= 0) {
-                    toast.error("Моля, въведете валидна сума за дарение.");
-                    return;
-                }
-        if (paymentMethod === "bank") {
-            toast.info("Моля направете банков превод по посочените данни.");
-            return;
+    const handleSubmit = (amountValue, method) => {
+        if (method === "paypal") {
+            toast.success(`PayPal плащане за ${amountValue} BGN`);
         }
 
-        if (!stripeUrl) {
-            toast.error("Няма директен Stripe линк за тази сума.");
-            return;
+        if (method === "stripe") {
+            const stripeUrl = stripeLinks[amountValue];
+            if (!stripeUrl) {
+                toast.error("Няма Stripe линк за тази сума.");
+                return;
+            }
+            window.open(stripeUrl, "_blank");
         }
-        window.open(stripeUrl, "_blank");
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-xl mt-10">
-            <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-                Подкрепете нашата кауза
-            </h1>
+        <div className="w-full flex flex-col md:flex-row justify-start items-start gap-12 mt-10 px-6 pl-12">
+            {/* Info Box */}
+            <div className="flex flex-col space-y-6 w-full max-w-md bg-gradient-to-br from-white via-green-50 to-red-50 p-8 rounded-2xl shadow-lg border border-red-200">
+                <h2 className="text-2xl font-extrabold text-green-600 mb-4">
+                    Подкрепете Фондация <span className="text-green-600">"Родолюбци за България"</span>
+                </h2>
+                <p className="text-gray-700 leading-relaxed mb-6">
+                    <strong>Фондация „Родолюбци за България“</strong> — фондация за изграждане на бъдещото поколение ръководители, държавници и родолюбиви създатели в Република България.
+                    Финансирана изцяло и единствено от българи. Подкрепяйки ни, Вие инвестирате в бъдещето на страната чрез образование, култура и създаване на устойчиви лидери на всички нива – от общинско до държавно.
+                </p>
 
-
-            <div className="flex justify-center mb-8 space-x-6">
-                <button
-                    onClick={() => {
-                        setActiveTab("small");
-                        setAmount("");
-                        setName("");
-                        setEmail("");
-                        setPhone("");
-                        setComment("");
-                        setPaymentMethod("bank");
-                    }}
-                    className={`px-8 py-3 rounded-t-lg font-semibold transition ${activeTab === "small"
-                        ? "bg-green-600 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                        }`}
-                >
-                    Дарения
-                </button>
-                <button
-                    onClick={() => {
-                        setActiveTab("large");
-                        setAmount("");
-                        setName("");
-                        setEmail("");
-                        setPhone("");
-                        setComment("");
-                        setPaymentMethod("bank");
-                    }}
-                    className={`px-8 py-3 rounded-t-lg font-semibold transition ${activeTab === "large"
-                        ? "bg-green-600 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                        }`}
-                >
-                    По-Големи Дарения
-                </button>
+                <h3 className="font-semibold text-lg text-green-800 mb-3 border-b-2 border-green-600 pb-1">
+                    Банков превод:
+                </h3>
+                <div className="space-y-2 text-gray-800 text-sm font-medium">
+                    <p><span className="font-semibold">Титуляр:</span> Родолюбци за България</p>
+                    <p><span className="font-semibold">Адрес:</span> София център, ул. „Георги С. Раковски“ 82, 1202 София</p>
+                    <p><span className="font-semibold">Банка:</span> ЮРОБАНК БЪЛГАРИЯ АД</p>
+                    <p><span className="font-semibold">IBAN:</span> BG74BPBI79421026341301</p>
+                    <p><span className="font-semibold">BIC:</span> BPBIBGSF</p>
+                    <p><span className="font-semibold">Основание:</span> Дарение</p>
+                    <div className="mt-4 p-4 bg-blue-200 border border-yellow-400 text-yellow-800 rounded-lg text-sm leading-relaxed">
+                        Молим Ви, при банков превод да изписвате <strong>„Дарение“</strong> в основанието на плащането, за да може средствата да се отчетат правилно според законовите изисквания. Благодарим Ви за подкрепата!
+                    </div>
+                </div>
             </div>
-            {activeTab === "small" && (
-                <>
-                    <p className="mb-6 text-gray-700">
-                        Открийте възможностите да подкрепите Фондация "Родолюбци за България"
-                    </p>
 
-                    <div className="mb-6 p-6 border rounded-md bg-gray-50">
-                        <p><strong>Банков превод:</strong></p>
-                        <p>Титуляр: “Родолюбци за България“</p>
-                        <p>Адрес: София център, ул. „Георги С. Раковски“ 82, 1202 София</p>
-                        <p>"ЮРОБАНК БЪЛГАРИЯ" АД</p>
-                        <p>IBAN: BG74BPBI79421026341301</p>
-                        <p>BIC: BPBIBGSF</p>
-                        <p>Основание: Дарение.</p>
-                    </div>
+            {/* Stripe Section */}
+            <div className="flex flex-col items-end space-y-4 w-full max-w-md">
+                <button
+                    onClick={() => {
+                        setShowStripe(!showStripe);
+                        setShowPaypal(false);
+                    }}
+                    className="bg-gradient-to-r from-green-600 via-green-700 to-red-600 text-white px-8 py-4 rounded-xl hover:from-green-700 hover:via-green-800 hover:to-red-700 transition w-full shadow-lg"
+                >
+                    {showStripe ? "Скрий Stripe суми" : "Дарение чрез Stripe"}
+                </button>
 
-
-                    <div className="mb-6">
-                        <label htmlFor="payment-method-small" className="block text-sm font-medium text-gray-700 mb-1">
-                            Изберете метод на превод
-                        </label>
-                        <select
-                            id="payment-method-small"
-                            value={paymentMethod}
-                            onChange={(e) => setPaymentMethod(e.target.value)}
-                            className="w-full border border-gray-300 rounded-md px-4 py-2"
-                        >
-                            <option value='Method'><strong>Изберете Метод</strong></option>
-                            <option value="bank">Банков превод</option>
-                            <option value="applePay">Apple Pay</option>
-                            <option value="paypal">Paypal</option>
-                            <option value="revolut">Revolut</option>
-                        </select>
-                    </div>
-
-                    <div className="grid grid-cols-5 gap-4 mb-8">
-                        {[20, 30, 50, 70, 100].map((val) => (
-                            <button
-                                key={val}
-                                type="button"
-                                onClick={() => handleDefaultAmountClick(val)}
-                                className={`py-3 rounded-lg text-white font-semibold transition ${amount === val.toString()
-                                    ? "bg-green-600"
-                                    : "bg-blue-600 hover:bg-blue-700"
-                                    }`}
+                {showStripe && (
+                    <div className="space-y-3 w-full max-w-xl mx-auto">
+                        {Object.entries(stripeLinks).map(([value]) => (
+                            <div
+                                key={value}
+                                className="p-[2px] rounded shadow-md bg-gradient-to-r from-white via-green-500 to-red-500"
                             >
-                                {val} лв
-                            </button>
+                                <button
+                                    onClick={() => handleSubmit(value, "stripe")}
+                                    className="w-full rounded p-4 text-lg font-semibold text-white text-center hover:brightness-110 transition bg-transparent"
+                                >
+                                    Направи дарение от {value} BGN чрез Stripe
+                                </button>
+                            </div>
                         ))}
                     </div>
+                )}
+            </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label
-                                htmlFor="donation-amount"
-                                className="block text-sm font-medium text-gray-700"
+            {/* PayPal Section */}
+            <div className="flex flex-col items-end space-y-4 w-full max-w-md">
+                <button
+                    onClick={() => {
+                        setShowPaypal(!showPaypal);
+                        setShowStripe(false);
+                    }}
+                    className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 text-white px-8 py-4 rounded-xl hover:from-blue-700 hover:via-blue-800 hover:to-purple-800 transition w-full shadow-lg"
+                >
+                    {showPaypal ? "Скрий PayPal суми" : "Дарение чрез PayPal"}
+                </button>
+
+                {showPaypal && (
+                    <div className="space-y-3 w-full max-w-xl mx-auto">
+                        {Object.keys(stripeLinks).map((value) => (
+                            <div
+                                key={value}
+                                className="p-[2px] rounded shadow-md bg-gradient-to-r from-white via-blue-500 to-purple-500"
                             >
-                                Дарение (лв)
-                            </label>
-                            <input
-                                type="number"
-                                id="donation-amount"
-                                name="amount"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
-                                required
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                                min="1"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="donor-name"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Вашето име
-                            </label>
-                            <input
-                                type="text"
-                                id="donor-name"
-                                name="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="donor-email"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Вашият имейл
-                            </label>
-                            <input
-                                type="email"
-                                id="donor-email"
-                                name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="donor-phone-small"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Телефон
-                            </label>
-                            <input
-                                type="tel"
-                                id="donor-phone-small"
-                                name="phone"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                                placeholder="+359..."
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="donor-comment-small"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Коментар (по желание)
-                            </label>
-                            <textarea
-                                id="donor-comment-small"
-                                name="comment"
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                rows="3"
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                            ></textarea>
-                        </div>
-
-                        <button
-                            type="submit"
-                            className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
-                        >
-                            Дарете сега
-                        </button>
-                    </form>
-                </>
-            )}
-
-            {activeTab === "large" && (
-                <>
-                    <p className="mb-6 text-gray-700">
-                        За големи дарения използвайте предоставените линкове или данни за банков превод.
-                    </p>
-
-                
-                    <div className="mb-6">
-                        <label htmlFor="payment-method-large" className="block text-sm font-medium text-gray-700 mb-1">
-                            Изберете метод на превод
-                        </label>
-                        <select
-                            id="payment-method-large"
-                            value={paymentMethod}
-                            onChange={(e) => setPaymentMethod(e.target.value)}
-                            className="w-full border border-gray-300 rounded-md px-4 py-2"
-                        >
-                            <option value='Method'><strong>Изберете Метод</strong></option>
-                            <option value="bank">Банков превод</option>
-                            <option value="applePay">Apple Pay</option>
-                            <option value="paypal">Paypal</option>
-                            <option value="revolut">Revolut</option>
-                        </select>
-                    </div>
-
-                    <div className="grid grid-cols-4 gap-4 mb-8">
-                        {[1000, 2000, 5000, 10000].map((val) => (
-                            <button
-                                key={val}
-                                type="button"
-                                onClick={() => handleDefaultAmountClick(val)}
-                                className={`py-3 rounded-lg text-white font-semibold transition ${amount === val.toString()
-                                    ? "bg-green-600"
-                                    : "bg-blue-600 hover:bg-blue-700"
-                                    }`}
-                            >
-                                {val} лв
-                            </button>
+                                <div className="rounded p-4 text-white text-center">
+                                    <p className="font-bold text-lg mb-4">
+                                        Дарение от {value} BGN чрез PayPal
+                                    </p>
+                                    <PayPalButton amount={value} />
+                                </div>
+                            </div>
                         ))}
                     </div>
-
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label
-                                htmlFor="donation-amount-large"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Дарение (лв)
-                            </label>
-                            <input
-                                type="number"
-                                id="donation-amount-large"
-                                name="amount"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
-                                required
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                                min="1"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="donor-name-large"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Вашето име
-                            </label>
-                            <input
-                                type="text"
-                                id="donor-name-large"
-                                name="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="donor-email-large"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Вашият имейл
-                            </label>
-                            <input
-                                type="email"
-                                id="donor-email-large"
-                                name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="donor-phone-large"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Телефон
-                            </label>
-                            <input
-                                type="tel"
-                                id="donor-phone-large"
-                                name="phone"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                                placeholder="+359..."
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="donor-comment-large"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                Коментар (по желание)
-                            </label>
-                            <textarea
-                                id="donor-comment-large"
-                                name="comment"
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                rows="3"
-                                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3"
-                            ></textarea>
-                        </div>
-
-                        <button
-                            type="submit"
-                            className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
-                        >
-                            Дарете сега
-                        </button>
-                    </form>
-                </>
-            )}
+                )}
+            </div>
         </div>
     );
 }
