@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { database } from '../../server/AuthenticationConfig'; 
+import { ref, push, set } from "firebase/database";
 
 function Contacts() {
     const [contactForm, setContactForm] = useState({
@@ -9,10 +11,40 @@ function Contacts() {
         description: ''
     });
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const contactRef = ref(database, 'contacts');
+            const newContactRef = push(contactRef);
+
+            await set(newContactRef, {
+                subject: contactForm.subject,
+                firstName: contactForm.firstName,
+                lastName: contactForm.lastName,
+                email: contactForm.email,
+                description: contactForm.description,
+                timestamp: new Date().toISOString()
+            });
+
+            alert("Съобщението беше изпратено успешно!");
+            setContactForm({
+                subject: '',
+                firstName: '',
+                lastName: '',
+                email: '',
+                description: ''
+            });
+        } catch (error) {
+            console.error("Грешка при записване във Firebase:", error);
+            alert("Възникна грешка при изпращането. Моля, опитайте отново.");
+        }
+    };
+
     return (
-        <div className="max-w-2xl mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">Контактна форма</h1>
-            <form className="space-y-4">
+        <div className="max-w-2xl mx-auto p-12">
+            <h1 className="text-3xl font-bold mb-14">Контактна форма</h1>
+            <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                     <label className="block text-sm font-medium mb-1">Тема</label>
                     <select
@@ -71,6 +103,13 @@ function Contacts() {
                         rows={4}
                     />
                 </div>
+
+                <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                    Изпрати
+                </button>
             </form>
         </div>
     );

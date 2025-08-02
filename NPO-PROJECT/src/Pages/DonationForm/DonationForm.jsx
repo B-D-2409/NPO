@@ -61,69 +61,56 @@ function DonationForm() {
                 </div>
             </div>
 
-            {/* Stripe Section */}
+            {/* Stripe Section - винаги отворена */}
             <div className="flex flex-col items-end space-y-4 w-full max-w-md">
-                <button
-                    onClick={() => {
-                        setShowStripe(!showStripe);
-                        setShowPaypal(false);
-                    }}
-                    className="bg-gradient-to-r from-green-600 via-green-700 to-red-600 text-white px-8 py-4 rounded-xl hover:from-green-700 hover:via-green-800 hover:to-red-700 transition w-full shadow-lg"
-                >
-                    {showStripe ? "Скрий Stripe суми" : "Дарение чрез Stripe"}
-                </button>
-
-                {showStripe && (
+                <div className="w-full">
+                    <h3 className="bg-gradient-to-r from-green-600 via-green-700 to-red-700 text-white px-8 py-4 rounded-xl w-full text-center shadow-lg font-semibold text-lg mb-6">
+                        Дарение чрез Stripe
+                    </h3>
                     <div className="space-y-3 w-full max-w-xl mx-auto">
                         {Object.entries(stripeLinks).map(([value]) => (
                             <div
                                 key={value}
-                                className="p-[2px] rounded shadow-md bg-gradient-to-r from-white via-green-500 to-red-500"
-                            >
-                                <button
-                                    onClick={() => handleSubmit(value, "stripe")}
-                                    className="w-full rounded p-4 text-lg font-semibold text-white text-center hover:brightness-110 transition bg-transparent"
-                                >
-                                    Направи дарение от {value} BGN чрез Stripe
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-
-            {/* PayPal Section */}
-            <div className="flex flex-col items-end space-y-4 w-full max-w-md">
-                <button
-                    onClick={() => {
-                        setShowPaypal(!showPaypal);
-                        setShowStripe(false);
-                    }}
-                    className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 text-white px-8 py-4 rounded-xl hover:from-blue-700 hover:via-blue-800 hover:to-purple-800 transition w-full shadow-lg"
-                >
-                    {showPaypal ? "Скрий PayPal суми" : "Дарение чрез PayPal"}
-                </button>
-
-                {showPaypal && (
-                    <div className="space-y-3 w-full max-w-xl mx-auto">
-                        {Object.keys(stripeLinks).map((value) => (
-                            <div
-                                key={value}
-                                className="p-[2px] rounded shadow-md bg-gradient-to-r from-white via-blue-500 to-purple-500"
+                                className="p-[2px] rounded shadow-md bg-gradient-to-r from-white via-green-500 to-red-500 cursor-pointer"
+                                onClick={() => handleSubmit(Number(value), "stripe")}
                             >
                                 <div className="rounded p-4 text-white text-center">
                                     <p className="font-bold text-lg mb-4">
-                                        Дарение от {value} BGN чрез PayPal
+                                        Дарение от {value} BGN чрез Stripe
                                     </p>
-                                    <PayPalButton amount={value} />
                                 </div>
                             </div>
                         ))}
                     </div>
-                )}
+                </div>
             </div>
+
+            {/* PayPal Section */}
+            <div className="flex flex-col items-end space-y-4 w-full max-w-md">
+                <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 text-white px-8 py-4 rounded-xl w-full text-center shadow-lg font-semibold text-lg">
+                    Дарение чрез PayPal
+                </div>
+
+                <div className="space-y-3 w-full max-w-xl mx-auto">
+                    {Object.keys(stripeLinks).map((value) => (
+                        <div
+                            key={value}
+                            className="p-[2px] rounded shadow-md bg-gradient-to-r from-white via-blue-500 to-purple-500"
+                        >
+                            <div className="rounded p-4 text-white text-center">
+                                <p className="font-bold text-lg mb-4">
+                                    Дарение от {value} BGN чрез PayPal
+                                </p>
+                                <PayPalButton amount={value} />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
         </div>
     );
+
 }
 
 export default DonationForm;
