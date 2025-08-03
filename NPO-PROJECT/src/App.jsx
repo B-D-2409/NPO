@@ -12,11 +12,11 @@ import DonationForm from './Pages/DonationForm/DonationForm';
 import ActivityHistory from './Pages/ActivityHistory/ActivityHistory';
 import PodCast from './Pages/PodCast/PodCast';
 import Footer from './Components/Footer/Footer';
-import Auth from './Components/Authentication/Auth';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminPage from './Components/Admin/Admin';
-import AdminLogin from './Components/Admin/AdminLogin';
+import AdminLogin from './Components/Authentication/AdminLogin';
+import EmailLinkHandler from './Components/Authentication/EmailLinkHandler';
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -34,9 +34,9 @@ function App() {
           <Route path="/donationform" element={<DonationForm />} />
           <Route path="/activityhistory" element={<ActivityHistory />} />
           <Route path="/podcast" element={<PodCast />} />
-          <Route path="/authentication" element={<Auth />} />
           <Route path='/admin' element={<AdminPage />} />
-          <Route path='/admin/login' element={<AdminLogin />} />  
+          <Route path='/admin/login' element={<AdminLogin />} /> 
+          <Route path="/email-link" element={<EmailLinkHandler />} /> 
         </Routes>
       </main>
       <ToastContainer position="top-right" autoClose={3000} />
