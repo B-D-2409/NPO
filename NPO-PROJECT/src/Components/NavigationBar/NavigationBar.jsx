@@ -92,26 +92,6 @@ function NavigationBar() {
                         )}
                     </div>
 
-                    {/* Вход */}
-                    <div className="relative">
-                        <button
-                            onClick={() => setIsLoginOpen(!isLoginOpen)}
-                            className="text-gray-700 hover:text-green-700 focus:outline-none font-semibold"
-                        >
-                            Вход
-                        </button>
-                        {isLoginOpen && (
-                            <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
-                                <Link
-                                    to="/authentication"
-                                    className="block px-4 py-2 text-gray-700 hover:bg-green-600"
-                                    onClick={() => setIsLoginOpen(false)}
-                                >
-                                    Вход в системата
-                                </Link>
-                            </div>
-                        )}
-                    </div>
                 </div>
 
                 <div className="md:hidden flex items-center space-x-4">

@@ -3,15 +3,19 @@ import { sendSignInLinkToEmail } from "firebase/auth";
 import { auth } from "./AuthenticationConfig";
 
 const actionCodeSettings = {
-  url: window.location.origin + '/admin', // Къде ще те пренасочи линка
-  handleCodeInApp: true,
+    url: 'http://localhost:5173/email-link',
+    handleCodeInApp: true
 };
+
+
 export async function sendMagicLink(email) {
     try {
-      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      window.localStorage.setItem("emailForSignIn", email); // 🔥 тази част е важна
-      alert("Изпратихме ти линк за вход на имейла!");
+        await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+        window.localStorage.setItem("emailForSignIn", email);
+        alert("Изпратихме ти линк за вход на имейла!");
     } catch (error) {
-      alert("Грешка при изпращане: " + error.message);
+        console.error("Magic link sending error:", error);
+        alert("Грешка при изпращане: " + error.message);
     }
-  }
+
+}
