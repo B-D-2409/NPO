@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Apply to all input, textarea, select elements */
+
+/* Default light mode form container */
+form, 
+.form-container, 
+.section-container, 
+.card, 
+.container {
+  @apply bg-white text-black transition-colors duration-300;
+}
+
+/* Dark mode form container */
+.dark form,
+.dark .form-container,
+.dark .section-container,
+.dark .card,
+.dark .container {
+  @apply bg-gray-900 text-white;
+}
