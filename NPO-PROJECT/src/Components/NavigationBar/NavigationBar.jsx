@@ -25,7 +25,11 @@ function NavigationBar({ darkMode, setDarkMode }) {
                 {/* Logo */}
                 <div className="flex-shrink-0 h-full flex items-center">
                     <Link to="/" className="h-full flex items-center">
-                        <img className="h-full w-auto object-contain" src="/Logo.png" alt="Logo" />
+                        <img
+                            className="h-full w-auto object-contain"
+                            src="/Logo.png"
+                            alt="Logo"
+                        />
                     </Link>
                 </div>
 
@@ -40,6 +44,8 @@ function NavigationBar({ darkMode, setDarkMode }) {
                             {label}
                         </Link>
                     ))}
+
+                    {/* More menu button (desktop) */}
                     <div className="relative">
                         <button
                             onClick={() => setIsMoreOpen(!isMoreOpen)}
@@ -89,50 +95,41 @@ function NavigationBar({ darkMode, setDarkMode }) {
                         )}
                     </div>
 
-                    {/* Dark mode toggle on desktop only */}
+                    {/* Dark mode toggle on desktop (top right) */}
                     <button
                         onClick={() => setDarkMode(!darkMode)}
                         aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
                         className="ml-4 p-2 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white shadow transition-colors"
                     >
                         {darkMode ? (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.36 4.95l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 7a5 5 0 100 10 5 5 0 000-10z"
-                                />
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                    d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.36 4.95l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 7a5 5 0 100 10 5 5 0 000-10z" />
                             </svg>
                         ) : (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                    d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
                             </svg>
                         )}
                     </button>
                 </div>
 
-                {/* Mobile menu and links */}
+                {/* Mobile menu toggle & links */}
                 <div className="md:hidden flex items-center space-x-4">
                     {mainLinks.map(({ to, label, color }) => (
-                        <Link key={label} to={to} className={`px-2 py-1 rounded font-semibold text-sm ${color}`}>
+                        <Link
+                            key={label}
+                            to={to}
+                            className={`px-2 py-1 rounded font-semibold text-sm ${color}`}
+                        >
                             {label}
                         </Link>
                     ))}
 
+                    {/* Mobile menu toggle button */}
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className="text-gray-700 hover:text-blue-600 focus:outline-none"
@@ -173,37 +170,23 @@ function NavigationBar({ darkMode, setDarkMode }) {
                         </Link>
                     ))}
 
-                    {/* Dark mode toggle on mobile only, placed below menu items */}
+                    {/* Dark mode toggle on mobile, placed below the mobile menu toggle */}
                     <button
                         onClick={() => setDarkMode(!darkMode)}
                         aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
                         className="mt-4 p-2 bg-gray-300 dark:bg-gray-700 rounded text-black dark:text-white shadow transition-colors w-full"
                     >
                         {darkMode ? (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 mx-auto"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.36 4.95l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 7a5 5 0 100 10 5 5 0 000-10z"
-                                />
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                    d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.36 4.95l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 7a5 5 0 100 10 5 5 0 000-10z" />
                             </svg>
                         ) : (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 mx-auto"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                    d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
                             </svg>
                         )}
                     </button>
@@ -211,6 +194,7 @@ function NavigationBar({ darkMode, setDarkMode }) {
             )}
         </nav>
     );
+
 
 }
 
