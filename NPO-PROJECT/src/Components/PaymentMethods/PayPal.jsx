@@ -16,12 +16,12 @@ function PayPalButton({ amount }) {
             },
             onApprove: (data, actions) => {
                 return actions.order.capture().then(details => {
-                    alert("Плащането е успешно, благодаря ви " + details.payer.name.given_name);
+                    toast.success("Плащането е успешно, благодаря ви " + details.payer.name.given_name);
                 });
             },
             onError: err => {
                 console.error("PayPal Error", err);
-                alert("Възникна грешка с PayPal.");
+                toast.error("Възникна грешка с PayPal.");
             }
         }).render(paypalRef.current);
     }, [amount]);

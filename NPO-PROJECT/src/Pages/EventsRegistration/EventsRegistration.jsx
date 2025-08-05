@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { database } from '../../server/AuthenticationConfig';
 import { toast } from "react-toastify";
 import { useFormValidation } from "../../Components/Common/Validation";
+import { ref, onValue } from "firebase/database";
 function EventsRegistration() {
 
     const [events, setEvents] = useState([]);
@@ -19,25 +20,25 @@ function EventsRegistration() {
     })
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const eventsRef = database.ref('events');
-                eventsRef.on('value', (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        const eventsArray = Object.entries(data).map(([id, event]) => ({
-                            id,
-                            ...event,
-                        }));
-                        setEvents(eventsArray);
-                    }
-                });
-            } catch (error) {
-                console.error("Грешка при зареждане на събития:", error);
-            }
-        };
+        const eventsRef = ref(database, 'events'); 
 
-        fetchEvents();
+        const unsubscribe = onValue(eventsRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const eventsArray = Object.entries(data).map(([id, event]) => ({
+                    id,
+                    ...event,
+                }));
+
+                eventsArray.sort((a, b) => new Date(a.startDateTime) - new Date(b.startDateTime));
+
+                setEvents(eventsArray);
+            } else {
+                setEvents([]);
+            }
+        });
+
+        return () => unsubscribe();
     }, []);
 
     const handleSubmitForm = async (e) => {
@@ -75,7 +76,7 @@ function EventsRegistration() {
     return (
         <div className="max-w-2xl mx-auto px-6 py-12 bg-white dark:bg-gray-900 shadow-xl dark:shadow-gray-800 rounded-2xl">
             <h1 className="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-gray-100">
-                Регистрация за събитие
+                Записване за Семинар
             </h1>
             <form
                 onSubmit={handleSubmitForm}
@@ -166,7 +167,10 @@ function EventsRegistration() {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-200 w-full disabled:opacity-70 disabled:cursor-not-allowed"
+                    className={`w-full px-4 py-2 rounded font-semibold text-white transition-colors duration-300 ${loading
+                        ? 'opacity-70 cursor-not-allowed'
+                        : 'bg-green-600 hover:bg-green-700 dark:bg-gradient-to-r dark:from-green-600 dark:to-red-600 dark:hover:from-green-700 dark:hover:to-red-700'
+                        }`}
                 >
                     {loading ? 'Изпращане...' : 'Регистрирай се'}
                 </button>

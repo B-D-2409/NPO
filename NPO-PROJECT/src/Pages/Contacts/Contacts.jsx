@@ -50,20 +50,28 @@ function Contacts() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto px-6 py-12 bg-white dark:bg-gray-900 shadow-xl dark:shadow-gray-800 rounded-2xl">
-            <h1 className="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-gray-100">
+        <div className="relative max-w-2xl mx-auto px-6 py-12 bg-white shadow-xl rounded-2xl
+    dark:bg-black dark:border dark:border-gray-700 dark:shadow-lg overflow-visible">
+
+            {/* glow effect layers */}
+            <div className="absolute -top-10 -left-10 w-40 h-40 bg-green-600 opacity-10 blur-2xl rounded-full pointer-events-none"></div>
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-red-600 opacity-10 blur-2xl rounded-full pointer-events-none"></div>
+
+            <h1 className="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-white">
                 Контактна форма
             </h1>
             <form className="space-y-6" onSubmit={handleSubmit}>
                 {/* Subject */}
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">
                         Тема
                     </label>
                     <select
                         value={contactForm.subject}
                         onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-gray-800 text-black dark:text-white"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-lg 
+                            focus:ring-2 focus:ring-blue-500 focus:outline-none 
+                            bg-white dark:bg-gray-800 text-black dark:text-white"
                     >
                         <option value="">Изберете тема</option>
                         <option value="General Inquiry">Обща информация</option>
@@ -75,22 +83,26 @@ function Contacts() {
                 {/* Name Fields */}
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="flex-1">
-                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Име</label>
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">Име</label>
                         <input
                             type="text"
                             value={contactForm.firstName}
                             onChange={(e) => setContactForm({ ...contactForm, firstName: e.target.value })}
-                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-gray-800 text-black dark:text-white"
+                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-lg 
+                                focus:ring-2 focus:ring-blue-500 focus:outline-none 
+                                bg-white dark:bg-gray-800 text-black dark:text-white"
                             placeholder="Име"
                         />
                     </div>
                     <div className="flex-1">
-                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Фамилия</label>
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">Фамилия</label>
                         <input
                             type="text"
                             value={contactForm.lastName}
                             onChange={(e) => setContactForm({ ...contactForm, lastName: e.target.value })}
-                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-gray-800 text-black dark:text-white"
+                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-lg 
+                                focus:ring-2 focus:ring-blue-500 focus:outline-none 
+                bg-white dark:bg-gray-800 text-black dark:text-white"
                             placeholder="Фамилия"
                         />
                     </div>
@@ -98,23 +110,27 @@ function Contacts() {
 
                 {/* Email */}
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">Email</label>
                     <input
                         type="email"
                         value={contactForm.email}
                         onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-gray-800 text-black dark:text-white"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-lg 
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none 
+                            bg-white dark:bg-gray-800 text-black dark:text-white"
                         placeholder="Email"
                     />
                 </div>
 
                 {/* Description */}
                 <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Описание</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-100 mb-1">Описание</label>
                     <textarea
                         value={contactForm.description}
                         onChange={(e) => setContactForm({ ...contactForm, description: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-gray-800 text-black dark:text-white"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-500 rounded-lg 
+                            focus:ring-2 focus:ring-blue-500 focus:outline-none 
+                    bg-white dark:bg-gray-800 text-black dark:text-white"
                         placeholder="Вашето съобщение"
                         rows={4}
                     />
@@ -125,7 +141,9 @@ function Contacts() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors duration-200 w-full ${loading ? 'opacity-70 cursor-not-allowed' : ''
+                        className={`w-full px-4 py-2 rounded font-semibold text-white transition-colors duration-300 ${loading
+                            ? 'opacity-70 cursor-not-allowed'
+                            : 'bg-green-600 hover:bg-green-700 dark:bg-gradient-to-r dark:from-green-600 dark:to-red-600 dark:hover:from-green-700 dark:hover:to-red-700'
                             }`}
                     >
                         {loading ? 'Изпращане...' : 'Изпрати'}
@@ -134,6 +152,7 @@ function Contacts() {
             </form>
         </div>
     );
+
 
 
 }

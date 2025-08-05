@@ -27,12 +27,12 @@ export default function EmailLinkHandler() {
                     if (allowedEmails.includes(result.user.email)) {
                         navigate('/admin'); 
                     } else {
-                        alert("Нямаш достъп.");
+                    toast.error("Нямаш достъп.");
                         navigate('/admin/login');
                     }
 
                 } catch (error) {
-                    alert('Грешка: ' + error.message);
+                    toast.error('Грешка: ' + error.message);
                     navigate('/');
                 }
             } else {

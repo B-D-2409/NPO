@@ -12,10 +12,10 @@ export async function sendMagicLink(email) {
     try {
         await sendSignInLinkToEmail(auth, email, actionCodeSettings);
         window.localStorage.setItem("emailForSignIn", email);
-        alert("Изпратихме ти линк за вход на имейла!");
+        toast.success("Изпратихме ти линк за вход на имейла!");
     } catch (error) {
         console.error("Magic link sending error:", error);
-        alert("Грешка при изпращане: " + error.message);
+        toast.error("Грешка при изпращане: " + error.message);
     }
 
 }

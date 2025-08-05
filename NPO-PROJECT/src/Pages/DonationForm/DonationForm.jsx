@@ -35,29 +35,29 @@ function DonationForm() {
 
     return (
         <div className="w-full flex flex-col md:flex-row justify-start items-start gap-12 mt-10 px-6 pl-12">
-            {/* Info Box */}
-            <div className="flex flex-col space-y-6 w-full max-w-md bg-gradient-to-br from-white via-green-50 to-red-50 p-8 rounded-2xl shadow-lg border border-red-200">
-                <h2 className="text-2xl font-extrabold text-green-600 mb-4">
-                    Подкрепете Фондация <span className="text-green-600">"Родолюбци за България"</span>
-                </h2>
-                <p className="text-gray-700 leading-relaxed mb-6">
-                    <strong>Фондация „Родолюбци за България“</strong> — фондация за изграждане на бъдещото поколение ръководители, държавници и родолюбиви създатели в Република България.
-                    Финансирана изцяло и единствено от българи. Подкрепяйки ни, Вие инвестирате в бъдещето на страната чрез образование, култура и създаване на устойчиви лидери на всички нива – от общинско до държавно.
-                </p>
-
-                <h3 className="font-semibold text-lg text-green-800 mb-3 border-b-2 border-green-600 pb-1">
-                    Банков превод:
-                </h3>
-                <div className="space-y-2 text-gray-800 text-sm font-medium">
-                    <p><span className="font-semibold">Титуляр:</span> Родолюбци за България</p>
-                    <p><span className="font-semibold">Адрес:</span> София център, ул. „Георги С. Раковски“ 82, 1202 София</p>
-                    <p><span className="font-semibold">Банка:</span> ЮРОБАНК БЪЛГАРИЯ АД</p>
-                    <p><span className="font-semibold">IBAN:</span> BG74BPBI79421026341301</p>
-                    <p><span className="font-semibold">BIC:</span> BPBIBGSF</p>
-                    <p><span className="font-semibold">Основание:</span> Дарение</p>
-                    <div className="mt-4 p-4 bg-blue-200 border border-yellow-400 text-yellow-800 rounded-lg text-sm leading-relaxed">
-                        Молим Ви, при банков превод да изписвате <strong>„Дарение“</strong> в основанието на плащането, за да може средствата да се отчетат правилно според законовите изисквания. Благодарим Ви за подкрепата!
-                    </div>
+        {/* Info Box */}
+        <div className="flex flex-col space-y-6 w-full max-w-md bg-gradient-to-br from-white via-green-50 to-red-50 dark:from-gray-800 dark:via-green-900 dark:to-red-900 p-8 rounded-2xl shadow-lg border border-red-200 dark:border-red-400">
+            <h2 className="text-2xl font-extrabold text-green-600 mb-4 dark:text-green-400">
+                Подкрепете Фондация <span className="text-green-600 dark:text-green-400">"Родолюбци за България"</span>
+            </h2>
+            <p className="text-gray-700 dark:text-gray-200 leading-relaxed mb-6">
+                <strong>Фондация „Родолюбци за България“</strong> — фондация за изграждане на бъдещото поколение ръководители, държавници и родолюбиви създатели в Република България.
+                Финансирана изцяло и единствено от българи. Подкрепяйки ни, Вие инвестирате в бъдещето на страната чрез образование, култура и създаване на устойчиви лидери на всички нива – от общинско до държавно.
+            </p>
+    
+            <h3 className="font-semibold text-lg text-green-800 dark:text-green-300 mb-3 border-b-2 border-green-600 dark:border-green-400 pb-1">
+                Банков превод:
+            </h3>
+            <div className="space-y-2 text-gray-800 dark:text-gray-200 text-sm font-medium">
+                <p><span className="font-semibold">Титуляр:</span> Родолюбци за България</p>
+                <p><span className="font-semibold">Адрес:</span> София център, ул. „Георги С. Раковски“ 82, 1202 София</p>
+                <p><span className="font-semibold">Банка:</span> ЮРОБАНК БЪЛГАРИЯ АД</p>
+                <p><span className="font-semibold">IBAN:</span> BG74BPBI79421026341301</p>
+                <p><span className="font-semibold">BIC:</span> BPBIBGSF</p>
+                <p><span className="font-semibold">Основание:</span> Дарение</p>
+                <div className="mt-4 p-4 bg-blue-200 dark:bg-yellow-100 border border-yellow-400 text-yellow-800 rounded-lg text-sm leading-relaxed dark:text-yellow-900">
+                    Молим Ви, при банков превод да изписвате <strong>„Дарение“</strong> в основанието на плащането, за да може средствата да се отчетат правилно според законовите изисквания. Благодарим Ви за подкрепата!
+                </div>
                 </div>
             </div>
 
