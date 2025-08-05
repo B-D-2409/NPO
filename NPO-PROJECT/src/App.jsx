@@ -18,6 +18,7 @@ import AdminPage from './Components/Admin/Admin';
 import AdminLogin from './Components/Authentication/AdminLogin';
 import EmailLinkHandler from './Components/Authentication/EmailLinkHandler';
 import useDarkMode from './Components/Common/Theme'
+import Events from './Pages/Events/Events';
 
 function App() {
   const [darkMode, setDarkMode] = useDarkMode();
@@ -42,7 +43,8 @@ function App() {
             <Route path="/podcast" element={<PodCast />} />
             <Route path='/admin' element={<AdminPage />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
-            <Route path="/email-link" element={<EmailLinkHandler />} /> 
+            <Route path="/email-link" element={<EmailLinkHandler />} />
+            <Route path='/events' element={<Events />} />
           </Routes>
         </main>
 
