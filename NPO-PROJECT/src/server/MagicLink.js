@@ -1,6 +1,7 @@
 // magicLink.js
 import { sendSignInLinkToEmail } from "firebase/auth";
 import { auth } from "./AuthenticationConfig";
+import { toast } from 'react-toastify';
 
 const actionCodeSettings = {
     url: 'http://localhost:5173/email-link',
