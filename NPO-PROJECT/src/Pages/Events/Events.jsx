@@ -87,15 +87,6 @@ function Events() {
                 Събития
             </h1>
 
-            {loading && !initialLoadComplete && (
-                <div className="flex justify-center items-center space-x-2 my-8 w-full">
-                    <span className="w-3 h-3 rounded-full bg-purple-600 animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-3 h-3 rounded-full bg-blue-600 animate-bounce" style={{ animationDelay: '300ms' }} />
-                    <span className="w-3 h-3 rounded-full bg-yellow-400 animate-bounce" style={{ animationDelay: '600ms' }} />
-                    <span className="w-3 h-3 rounded-full bg-green-600 animate-bounce" style={{ animationDelay: '900ms' }} />
-                    <span className="w-3 h-3 rounded-full bg-orange-500 animate-bounce" style={{ animationDelay: '1200ms' }} />
-                </div>
-            )}
 
             {events.length > 0 ? (
                 <InfiniteScrollWrapper

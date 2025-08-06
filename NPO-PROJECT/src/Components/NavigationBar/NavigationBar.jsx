@@ -18,6 +18,7 @@ function NavigationBar({ darkMode, setDarkMode }) {
         { to: "/contacts", label: "Контакти" },
         { to: "/podcast", label: "Видео" },
         { to: "/eventsregistration", label: "Семинари" },
+        { to: "/events", label: "Събития" },
     ];
     return (
         <nav className="bg-green-100 shadow-md fixed w-full top-0 z-50 h-32">

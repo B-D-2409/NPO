@@ -13,10 +13,10 @@ export function InfiniteScrollWrapper({
             hasMore={hasMore}
             loader={
                 <div className="flex justify-center items-center space-x-2 my-8 w-full">
-                    <div className="w-3 h-3 rounded-full bg-white-600 animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-3 h-3 rounded-full bg-white animate-bounce" style={{ animationDelay: '0ms' }} />
                     <div className="w-3 h-3 rounded-full bg-green-600 animate-bounce" style={{ animationDelay: '300ms' }} />
                     <div className="w-3 h-3 rounded-full bg-red-400 animate-bounce" style={{ animationDelay: '600ms' }} />
-                    <div className="w-3 h-3 rounded-full bg-white-600 animate-bounce" style={{ animationDelay: '900ms' }} />
+                    <div className="w-3 h-3 rounded-full bg-white animate-bounce" style={{ animationDelay: '900ms' }} />
                     <div className="w-3 h-3 rounded-full bg-green-500 animate-bounce" style={{ animationDelay: '1200ms' }} />
                     <div className="w-3 h-3 rounded-full bg-red-500 animate-bounce" style={{ animationDelay: '1600ms' }} />
                 </div>
