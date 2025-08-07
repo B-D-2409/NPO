@@ -9,7 +9,7 @@ import {
 } from 'firebase/database';
 import { database } from '../../server/AuthenticationConfig';
 import { InfiniteScrollWrapper } from '../../Components/Common/InfiniteScroll';
-
+import { useNavigate } from 'react-router-dom';
 const PAGE_SIZE = 4;
 
 function Events() {
@@ -18,6 +18,15 @@ function Events() {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+    const [joinEvent, setJoinEvent] = useState(null);
+    const navigate = useNavigate();
+
+
+
+    const handleJoinEvent = (eventId) => {
+        setJoinEvent(eventId);
+        navigate(`/eventsregistration?eventId=${eventId}`);
+    }
 
     useEffect(() => {
         loadMoreEvents();
@@ -121,6 +130,13 @@ function Events() {
                             <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 <span>Край: </span>{new Date(event.endDateTime).toLocaleString()}
                             </p>
+
+                            <button
+                                onClick={() => handleJoinEvent(event.id)}
+                                className="mt-4 bg-green-500 hover:bg-[rgb(85,166,241)] text-white font-bold py-2 px-4 rounded"
+                            >
+                                Присъедини се
+                            </button>
                         </li>
                     )}
                 />

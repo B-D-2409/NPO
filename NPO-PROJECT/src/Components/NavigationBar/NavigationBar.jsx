@@ -15,13 +15,13 @@ function NavigationBar({ darkMode, setDarkMode }) {
         { to: "/", label: "Начало" },
         { to: "/news", label: "Новини" },
         { to: "/projects", label: "Проекти" },
-        { to: "/contacts", label: "Контакти" },
-        { to: "/podcast", label: "Видео" },
-        { to: "/eventsregistration", label: "Семинари" },
+        { to: "/eventsregistration", label: "Записване за Семинари" },
         { to: "/events", label: "Събития" },
+        { to: "/podcast", label: "Видео" },
+        { to: "/contacts", label: "Контакти" },
     ];
     return (
-        <nav className="bg-green-100 shadow-md fixed w-full top-0 z-50 h-32">
+        <nav className="bg-[rgb(199,255,252)] shadow-md fixed w-full top-0 z-50 h-32">
             <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 h-full flex items-center justify-between">
                 {/* Logo */}
                 <div className="flex-shrink-0 h-full flex items-center">
@@ -78,7 +78,7 @@ function NavigationBar({ darkMode, setDarkMode }) {
                                 onClick={() => setIsMoreOpen(false)}
                             >
                                 <div
-                                    className="bg-white rounded-lg shadow-xl w-[95%] max-w-[1100px] p-8 space-y-6"
+                                    className="bg-green-50 rounded-lg shadow-xl w-[95%] max-w-[1100px] p-8 space-y-6"
                                     onClick={(e) => e.stopPropagation()}
                                 >
                                     {moreLinks.map(({ to, label }) => (
