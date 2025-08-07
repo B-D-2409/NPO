@@ -8,7 +8,7 @@ function NavigationBar({ darkMode, setDarkMode }) {
     const mainLinks = [
         { to: "/donationform", label: "ДАРЕТЕ", color: "bg-white text-black" },
         { to: "/mission", label: "МИСИЯ", color: "bg-green-500 text-white" },
-        { to: "/activityhistory", label: "ДЕЙНОСТИ", color: "bg-red-500 text-white" },
+        { to: "/visitrequestform", label: "ДЕЙНОСТИ", color: "bg-red-500 text-white" },
     ];
 
     const moreLinks = [
@@ -19,6 +19,7 @@ function NavigationBar({ darkMode, setDarkMode }) {
         { to: "/events", label: "Събития" },
         { to: "/podcast", label: "Видео" },
         { to: "/contacts", label: "Контакти" },
+        { to: '/activityhistory', label: 'Свършена Работа'},
     ];
     return (
         <nav className="bg-[rgb(199,255,252)] shadow-md fixed w-full top-0 z-50 h-32">
