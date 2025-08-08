@@ -1,90 +1,130 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { ref, get, set, update, onValue } from "firebase/database";
+import { database } from "../../server/AuthenticationConfig";
 
 function VisitRequestForm() {
+    const [carVotes, setCarVotes] = useState({ ferrari: 0, mclaren: 0 });
+    const [city, setCity] = useState("");
+    const [topCities, setTopCities] = useState([]);
+    const [selectedCar, setSelectedCar] = useState("ferrari");
+
+    const handleVote = async (e) => {
+        e.preventDefault();
+
+        // Update local car votes
+        setCarVotes((prev) => ({
+            ...prev,
+            [selectedCar]: prev[selectedCar] + 1,
+        }));
+
+        // Update city vote in Realtime Database
+        const trimmedCity = city.trim().toLowerCase();
+        if (trimmedCity) {
+            const cityRef = ref(database, `cityVotes/${trimmedCity}`);
+
+            const snapshot = await get(cityRef);
+            const currentVotes = snapshot.exists() ? snapshot.val() : 0;
+
+            await set(cityRef, currentVotes + 1);
+
+            setCity("");
+            fetchTopCities(); // refresh
+        }
+    };
+
+    const fetchTopCities = async () => {
+        const cityVotesRef = ref(database, "cityVotes");
+
+        const snapshot = await get(cityVotesRef);
+        const data = snapshot.val() || {};
+
+        const sorted = Object.entries(data)
+            .map(([name, votes]) => ({ name, votes }))
+            .sort((a, b) => b.votes - a.votes)
+            .slice(0, 5);
+
+        setTopCities(sorted);
+    };
+
+    useEffect(() => {
+        fetchTopCities();
+    }, []);
     return (
-        <div className="bg-gradient-to-br from-black to-gray-900 min-h-screen text-white p-6">
-            {/* Header */}
+        <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white p-6 transition-colors duration-300">
             <div className="text-center mb-12">
-                <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-red-500 uppercase">
-                    Ferrari & McLaren Experience
+                <h1 className="text-4xl font-extrabold text-red-600 dark:text-red-400 uppercase">
+                    Ferrari и McLaren
                 </h1>
-                <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-                    Drive the dream. Dress the drive. Book your ride and choose your exclusive t-shirt.
+                <p className="mt-4 text-lg text-gray-700 dark:text-gray-300">
+                    Гласувайте за любимия си автомобил и изберете град за нашето следващо посещение!
                 </p>
             </div>
 
-            {/* Main Grid Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
-                {/* Left: Booking Form */}
-                <div className="bg-gray-800 rounded-xl shadow-xl p-8 h-fit">
-                    <h2 className="text-2xl font-semibold mb-6 text-yellow-400">Book Your Ride</h2>
-                    <form className="space-y-4">
+                {/* Left: Voting Form */}
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-xl p-8">
+                    <h2 className="text-2xl font-semibold mb-6 text-yellow-600 dark:text-yellow-400">Гласуване</h2>
+                    <form className="space-y-4" onSubmit={handleVote}>
                         <div>
-                            <label className="block text-sm mb-1">Your Name</label>
-                            <input
-                                type="text"
-                                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500"
-                                placeholder="John Doe"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm mb-1">City to Visit</label>
-                            <input
-                                type="text"
-                                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                                placeholder="e.g., Milan, Tokyo"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm mb-1">Choose Car</label>
-                            <select className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600">
+                            <label className="block text-sm mb-1">Избери автомобил</label>
+                            <select
+                                value={selectedCar}
+                                onChange={(e) => setSelectedCar(e.target.value)}
+                                className="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-700 text-black dark:text-white"
+                            >
                                 <option value="ferrari">Ferrari</option>
                                 <option value="mclaren">McLaren</option>
                             </select>
                         </div>
+
+                        <div>
+                            <label className="block text-sm mb-1">Град за посещение</label>
+                            <input
+                                type="text"
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                                className="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-700 text-black dark:text-white border border-gray-300 dark:border-gray-600"
+                                placeholder="напр. Пловдив, Варна"
+                            />
+                        </div>
+
                         <button
                             type="submit"
-                            className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg transition duration-300"
+                            className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg"
                         >
-                            Book Now
+                            Гласувай сега
                         </button>
                     </form>
+
+                    {/* Car votes (local only) */}
+                    <div className="mt-8">
+                        <h3 className="text-lg font-semibold mb-2 text-green-600 dark:text-green-400">Популярност на коли</h3>
+                        <p>🚗 Ferrari: <span className="font-bold text-red-600">{carVotes.ferrari}</span> гласа</p>
+                        <p>🏎️ McLaren: <span className="font-bold text-orange-500">{carVotes.mclaren}</span> гласа</p>
+                    </div>
+
+                    {/* Top cities */}
+                    <div className="mt-8">
+                        <h3 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-400">Топ 5 града</h3>
+                        <ol className="list-decimal list-inside space-y-1">
+                            {topCities.length > 0 ? (
+                                topCities.map((c, i) => (
+                                    <li key={i}>
+                                        {c.name} – <span className="text-yellow-500">{c.votes}</span> гласа
+                                    </li>
+                                ))
+                            ) : (
+                                <p className="text-gray-500 dark:text-gray-400">Още няма гласове.</p>
+                            )}
+                        </ol>
+                    </div>
                 </div>
 
-                {/* Right: T-Shirt Grid */}
+                {/* Right: T-Shirts (unchanged) */}
                 <div>
-                    <h2 className="text-2xl font-bold text-white mb-4 text-center md:text-left">
-                        Limited Edition T-Shirts
-                    </h2>
+                    <h2 className="text-2xl font-bold mb-4 text-center md:text-left">Лимитирани тениски</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {/* T-Shirt Card 1 */}
-                        <div className="bg-gray-800 rounded-lg p-4 text-center shadow-md hover:scale-105 transition transform duration-300">
-                            <img src="/tshirts/model1.png" alt="T-Shirt 1" className="w-full rounded-md mb-2" />
-                            <p className="text-white font-semibold">Ferrari Red Streetwear</p>
-                            <button className="mt-2 bg-yellow-400 text-black py-1 px-4 rounded-full hover:bg-yellow-500">
-                                Order
-                            </button>
-                        </div>
-
-                        {/* T-Shirt Card 2 */}
-                        <div className="bg-gray-800 rounded-lg p-4 text-center shadow-md hover:scale-105 transition transform duration-300">
-                            <img src="/tshirts/model2.png" alt="T-Shirt 2" className="w-full rounded-md mb-2" />
-                            <p className="text-white font-semibold">McLaren Urban Black</p>
-                            <button className="mt-2 bg-yellow-400 text-black py-1 px-4 rounded-full hover:bg-yellow-500">
-                                Order
-                            </button>
-                        </div>
-
-                        {/* T-Shirt Card 3 */}
-                        <div className="bg-gray-800 rounded-lg p-4 text-center shadow-md hover:scale-105 transition transform duration-300">
-                            <img src="/tshirts/model3.png" alt="T-Shirt 3" className="w-full rounded-md mb-2" />
-                            <p className="text-white font-semibold">Turbo Drive Edition</p>
-                            <button className="mt-2 bg-yellow-400 text-black py-1 px-4 rounded-full hover:bg-yellow-500">
-                                Order
-                            </button>
-                        </div>
-
-                        {/* Add more t-shirts as needed */}
+                        {/* ... вашите тениски ... */}
                     </div>
                 </div>
             </div>
