@@ -90,6 +90,7 @@ function Events() {
         }
     };
 
+    
     return (
         <div className="relative min-h-screen bg-white dark:bg-black p-6 flex flex-col">
             <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-900 dark:text-white">
@@ -103,9 +104,9 @@ function Events() {
                     loadMore={loadMoreEvents}
                     hasMore={hasMore}
                     height="calc(100vh - 180px)"
-                    renderItem={(event) => (
+                    renderItem={(event, index) => ( 
                         <li
-                            key={event.id}
+                        key={`${event.id}-${index}`}
                             className="w-full max-w-md p-6 rounded-2xl bg-gradient-to-br from-white via-green-50 to-red-50
                 dark:from-gray-800 dark:via-green-900 dark:to-red-900
                 shadow-md border border-gray-200 dark:border-gray-700
@@ -155,4 +156,9 @@ function Events() {
     );
 }
 
+export function getLastEvent(events) {
+    if (!events || events.length === 0) return null;
+    return events[events.length - 1]; // last event
+  }
+  
 export default Events;
